@@ -263,7 +263,6 @@ ironic_console_serial_speed: "115200n8"
 ironic_http_url: "http://{{ api_interface_address | put_address_in_context('url') }}:{{ ironic_http_port }}"
 ironic_enable_rolling_upgrade: "yes"
 ironic_upgrade_skip_wait_check: false
-ironic_inspector_kernel_cmdline_extras: []
 ironic_inspector_pxe_filter: "{% if enable_neutron | bool %}dnsmasq{% else %}noop{% endif %}"
 
 
@@ -320,3 +319,27 @@ ironic_ks_users:
 # TLS
 ####################
 ironic_enable_tls_backend: "{{ kolla_enable_tls_backend }}"
+
+####################
+# Kernel Parameters
+####################
+
+ironic_pxe_append_params_default:
+  - nofb
+  - nomodeset
+  - vga=normal
+  - console=tty0
+  - console=ttyS0,115200n8
+  - ipa-ntp-server=192.168.33.3
+ironic_pxe_append_params_extras: []
+ironic_pxe_append_params: {{ ( ironic_pxe_append_params_default + ironic_pxe_append_params_extras ) | join("") }}
+
+ironic_inspector_kernel_params_default:
+  - nofb
+  - nomodeset
+  - vga=normal
+  - console=tty0
+  - console=ttyS0,115200n8
+  - ipa-ntp-server=192.168.33.3
+ironic_inspector_kernel_params_extras: []
+ironic_inspector_kernel_params: {{ ( ironic_inspector_kernel_params_default + ironic_inspector_kernel_params_extras ) | join("") }}
