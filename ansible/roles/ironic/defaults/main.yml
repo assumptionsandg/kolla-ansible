@@ -325,21 +325,21 @@ ironic_enable_tls_backend: "{{ kolla_enable_tls_backend }}"
 ####################
 
 ironic_pxe_append_params_default:
-  - nofb
-  - nomodeset
-  - vga=normal
-  - console=tty0
-  - console=ttyS0,115200n8
-  - ipa-ntp-server=192.168.33.3
+  - "nofb"
+  - "nomodeset"
+  - "vga=normal"
+  - "console=tty0"
+  - "console=ttyS0,115200n8"
+  - "ipa-ntp-server=192.168.33.3"
 ironic_pxe_append_params_extras: []
-ironic_pxe_append_params: {{ ( ironic_pxe_append_params_default + ironic_pxe_append_params_extras ) | join("") }}
+ironic_pxe_append_params: "{{ ( ironic_pxe_append_params_default + ironic_pxe_append_params_extras ) | join(' ') }}"
 
 ironic_inspector_kernel_params_default:
-  - nofb
-  - nomodeset
-  - vga=normal
-  - console=tty0
-  - console=ttyS0,115200n8
-  - ipa-ntp-server=192.168.33.3
+  - "nofb"
+  - "nomodeset"
+  - "vga=normal"
+  - "console=tty0"
+  - "console=ttyS0,115200n8"
+  - "ipa-ntp-server=192.168.33.3"
 ironic_inspector_kernel_params_extras: []
-ironic_inspector_kernel_params: {{ ( ironic_inspector_kernel_params_default + ironic_inspector_kernel_params_extras ) | join("") }}
+ironic_inspector_kernel_params: "{{ ( ironic_inspector_kernel_params_default + ironic_inspector_kernel_params_extras ) | join(' ') }}"
