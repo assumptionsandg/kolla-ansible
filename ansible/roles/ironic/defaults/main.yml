@@ -330,16 +330,14 @@ ironic_pxe_append_params_default:
   - "vga=normal"
   - "console=tty0"
   - "console=ttyS0,115200n8"
-  - "ipa-ntp-server=192.168.33.3"
+  - "ipa-ntp-server={{ 'api' | kolla_address }}"
 ironic_pxe_append_params_extras: []
 ironic_pxe_append_params: "{{ ( ironic_pxe_append_params_default + ironic_pxe_append_params_extras ) | join(' ') }}"
 
 ironic_inspector_kernel_params_default:
-  - "nofb"
-  - "nomodeset"
-  - "vga=normal"
-  - "console=tty0"
-  - "console=ttyS0,115200n8"
-  - "ipa-ntp-server=192.168.33.3"
+  - "ipa-inspection-callback-url={{ ironic_inspector_internal_endpoint }}/v1/continue"
+  - "systemd.journald.forward_to_console=yes"
+  - "initrd=ironic-agent.initramfs"
+  - "ipa-ntp-server={{ 'api' | kolla_address }}"
 ironic_inspector_kernel_params_extras: []
 ironic_inspector_kernel_params: "{{ ( ironic_inspector_kernel_params_default + ironic_inspector_kernel_params_extras ) | join(' ') }}"
