@@ -323,7 +323,6 @@ ironic_enable_tls_backend: "{{ kolla_enable_tls_backend }}"
 ####################
 # Kernel Parameters
 ####################
-
 ironic_pxe_append_params_default:
   - "nofb"
   - "nomodeset"
