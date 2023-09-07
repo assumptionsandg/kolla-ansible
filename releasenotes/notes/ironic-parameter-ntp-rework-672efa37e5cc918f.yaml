@@ -1,0 +1,7 @@
+---
+features:
+  - |
+    Adds a new 'Kernel Parameters' section to Ironic defaults.yml and
+    removing hardcoded options from template files to allow for
+    customization of kernel options. Also adds a default configuration
+    for Ironic Python Agent (IPA) NTP server.
