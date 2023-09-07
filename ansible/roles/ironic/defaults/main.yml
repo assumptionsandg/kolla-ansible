@@ -259,6 +259,7 @@ ironic_dnsmasq_serve_ipxe: "{{ enable_ironic_ipxe | default(\"yes\") }}"
 ironic_dnsmasq_boot_file: "{% if ironic_dnsmasq_serve_ipxe | bool %}undionly.kpxe{% else %}pxelinux.0{% endif %}"
 ironic_dnsmasq_uefi_ipxe_boot_file: "snponly.efi"
 ironic_cleaning_network:
+ironic_inspector_kernel_cmdline_extras: "{{ ironic_inspector_kernel_params_extras }}"
 ironic_console_serial_speed: "115200n8"
 ironic_http_url: "http://{{ api_interface_address | put_address_in_context('url') }}:{{ ironic_http_port }}"
 ironic_enable_rolling_upgrade: "yes"
@@ -328,7 +329,7 @@ ironic_pxe_append_params_default:
   - "nomodeset"
   - "vga=normal"
   - "console=tty0"
-  - "console=ttyS0,115200n8"
+  - "console=ttyS0,{{ ironic_console_serial_speed }}"
   - "ipa-ntp-server={{ 'api' | kolla_address }}"
 ironic_pxe_append_params_extras: []
 ironic_pxe_append_params: "{{ ( ironic_pxe_append_params_default + ironic_pxe_append_params_extras ) | join(' ') }}"
@@ -337,6 +338,7 @@ ironic_inspector_kernel_params_default:
   - "ipa-inspection-callback-url={{ ironic_inspector_internal_endpoint }}/v1/continue"
   - "systemd.journald.forward_to_console=yes"
   - "initrd=ironic-agent.initramfs"
+  - "BOOTIF='{% raw %}${mac}{% endraw %}'"
   - "ipa-ntp-server={{ 'api' | kolla_address }}"
 ironic_inspector_kernel_params_extras: []
 ironic_inspector_kernel_params: "{{ ( ironic_inspector_kernel_params_default + ironic_inspector_kernel_params_extras ) | join(' ') }}"
