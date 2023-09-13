@@ -52,6 +52,27 @@
     - container_facts['ironic_http'] is not defined
     - inventory_hostname in groups['ironic-http']
 
+- name: Checking active port for Ironic NTP server
+  wait_for:
+    host: "{{ ironic_ntp_server }}"
+    port: "123"
+    connect_timeout: 1
+    timeout: 1
+    state: stopped
+  when:
+    - ironic_ntp_server | length
+    - ironic_enable_ntp_precheck | bool
+
+- name: Checking active port for Ironic Inspector NTP server
+  wait_for:
+    host: "{{ ironic_inspector_ntp_server }}"
+    port: "123"
+    connect_timeout: 1
+    timeout: 1
+    state: stopped
+  when:
+    - ironic_inspector_ntp_server | length
+
 - name: Checking ironic-agent files exist for Ironic Inspector
   stat:
     path: "{{ node_custom_config }}/ironic/{{ item }}"
